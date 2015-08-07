@@ -10,3 +10,5 @@ callgrind
 callgrind.out
 outfile.cgrind
 outfile.fprof
+*.exe
+*.dll

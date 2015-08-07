@@ -93,4 +93,19 @@ f(Res), Res = [ echo:benchmark(10, PayloadLength * 1240 + 1, 1000, 100) || Paylo
  ```
 
  So we see there is an optimum at around 60 KB payload size with ~870 MB/s.
- 
+
+
+## Comparing python to c#
+Run on local machine (thinkpad t450s, core i7, 4 cores)
+
+
+### echo scripts, mock json string (13K)
+python:   {{5,1,1000,100},  10 411.135750799054, 139 936 075.6264901}
+c#:       {{5,1,1000,100},   7 012.229327947941,  94 251 374.39694826}
+
+### echo with serialisation and deseialisation of mock json (13K)
+c#:       {{5,1,1000,100},     199.89649359561616, 2 686 808.770418677}
+
+### Observations
+* The io in c# is slower that python, but only 30% which seems acceptable
+* The json parsing is a much bigger overhead than the pipe, almost 2 orders of magnitude

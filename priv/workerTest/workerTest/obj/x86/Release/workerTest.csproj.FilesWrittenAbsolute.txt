@@ -1,0 +1,6 @@
+/home/reimerei/dev/workerTest/workerTest/obj/x86/Release/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/reimerei/dev/workerTest/workerTest/bin/Release/workerTest.exe.mdb
+/home/reimerei/dev/workerTest/workerTest/bin/Release/workerTest.exe
+/home/reimerei/dev/workerTest/workerTest/obj/x86/Release/workerTest.exe
+/home/reimerei/dev/workerTest/workerTest/obj/x86/Release/workerTest.exe.mdb
+/home/reimerei/dev/workerTest/workerTest/bin/Release/NetJSON.dll

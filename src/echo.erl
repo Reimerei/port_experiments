@@ -40,20 +40,25 @@ benchmark(PoolSize, PayloadLength, Samples, Parallel) ->
 benchmark(PayloadLength, Samples, Parallel) ->
     Payload1 = << <<"x">> || _ <- lists:seq(1, PayloadLength - 1) >>,
     Payload2 = << Payload1/binary, <<"\n">>/binary >>,
+    {ok, Json} = file:read_file("mock.json"),
+    JsonPayload = << Json/binary, <<"\n">>/binary >>,
+
+    Payload = JsonPayload,
+
     {Elapsed, _} =
     fixed_rate:run_parallel(Parallel,
         fun(_) ->
-            echo:echo(Payload2),
+            echo:echo(Payload),
             ok
         end,
     lists:seq(1, Samples), 1000000),
-    {{Samples, PayloadLength, Parallel}, Samples/Elapsed, PayloadLength * Samples / Elapsed}.
+    {{Samples, PayloadLength, Parallel}, Samples/Elapsed, size(Payload) * Samples / Elapsed}.
 
 start_pool(Size) ->
     application:load(echo),
     application:stop(palma),
     palma:start(),
-    palma:new(echo_pool, Size, {echo, {echo, start_link, ["./priv/echo.py"]}, permanent, 1000, worker, [echo]}).
+    palma:new(echo_pool, Size, {echo, {echo, start_link, ["./run.sh"]}, permanent, 1000, worker, [echo]}).
 
 start_link(ExtProg) ->
     gen_server:start_link(echo, ExtProg, []).
@@ -70,7 +75,7 @@ echo(Msg, Server) ->
 
 init(ExtProg) ->
     process_flag(trap_exit, true),
-    Port = open_port({spawn, ExtProg}, [binary, {packet, 4}, {parallelism, true}]),
+    Port = open_port({spawn, ExtProg}, [binary, stream, {parallelism, true}, {line, 100000}]),
     {ok, #state{port = Port}}.
 
 handle_call({echo, Msg}, _From, #state{port = Port} = State) ->
@@ -88,7 +93,12 @@ handle_cast(_Msg, State) ->
     {noreply, State}.
 
 handle_info({'EXIT', Port, Reason}, #state{port = Port} = State) ->
-    {stop, {port_terminated, Reason}, State}.
+    {stop, {port_terminated, Reason}, State};
+
+handle_info({Port, {data, Data}}, State) ->
+    io:fwrite("EXTRA:"),    
+    % io:fwrite(Data),
+    {noreply, State}.    
 
 code_change(_OldVsn, State, _Extra) ->
     {ok, State}.
@@ -113,6 +123,8 @@ get_maxline() ->
 collect_response(Port) ->
     receive
         {Port, {data, Data}} ->
+            % io:fwrite("RECEIVED:"),
+            % io:fwrite(Data),
             {response, Data}
     %% Prevent the gen_server from hanging indefinitely in case the
     %% spawned process is taking too long processing the request.

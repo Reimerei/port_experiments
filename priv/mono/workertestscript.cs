@@ -1,16 +1,28 @@
 using System;
+using System.IO;
 using SimpleJSON;
 
 public class WorkerTestScript
 { 
 	static void Main(string[] args)
 	{		
-		string line;
-		while ((line = Console.ReadLine()) != null) {
-			
-			JSONNode json = JSON.Parse(line);
-			Console.WriteLine(json.ToString());
+		string mode = "";
+		if (args.Length > 0) {
+			mode = args[0];
+		}
 
+		// StreamWriter sw = new StreamWriter(Console.OpenStandardOutput());
+  //   sw.AutoFlush = false;
+
+		string line;
+		while ((line = Console.ReadLine()) != null) {				    			
+			if (mode == "json") {
+				JSONNode json = JSON.Parse(line);
+				Console.Out.WriteLine(json.ToString());								
+			} else {
+				Console.Out.WriteLine(line);				
+			}
+			Console.Out.Flush();		
 		}
 	}
 	
