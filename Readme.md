@@ -108,5 +108,5 @@ c#:       {{5,1,3000,10},    5 696.253004773461, 127 516 319.76485868}
 c#:       {{5,1,3000,10},       87.02312848494996, 1 948 099.75426409}
 
 ### Observations
-* The io with stdin/stdout is quite slow in c#, c++ is the quickest
+* The io with stdin/stdout is quite slow in c#, c++ is the quickestZ
 * The json parsing is a much bigger overhead than the pipe, almost 2 orders of magnitude

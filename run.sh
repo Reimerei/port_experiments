@@ -1,9 +1,9 @@
 #!/bin/sh
-cd priv/workerTest/workerTest/bin/Release/
+# cd priv/workerTest/workerTest/bin/Release/
 # mono workerTest.exe 
-mono workerTest.exe json
+# mono workerTest.exe json
 # priv/echo.py
-# priv/fb_wrap/fb_wrap
+priv/fb_wrap/fb_wrap
 
 # cd priv/flatbuffers
 # # flatc -o out -b quests.fbs /dev/stdin
