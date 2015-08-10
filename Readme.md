@@ -99,13 +99,14 @@ f(Res), Res = [ echo:benchmark(10, PayloadLength * 1240 + 1, 1000, 100) || Paylo
 Run on local machine (thinkpad t450s, core i7, 4 cores)
 
 
-### echo scripts, mock json string (13K)
-python:   {{5,1,1000,100},  10 411.135750799054, 139 936 075.6264901}
-c#:       {{5,1,1000,100},   7 012.229327947941,  94 251 374.39694826}
+### echo scripts, mock json string (22K)
+c++:      {{5,1,3000,10},   18 898.233015213078, 423 055 844.27856}
+python:   {{5,1,3000,10},   11 909.72428988269,  266 611 087.9533139}
+c#:       {{5,1,3000,10},    5 696.253004773461, 127 516 319.76485868}
 
 ### echo with serialisation and deseialisation of mock json (13K)
-c#:       {{5,1,1000,100},     199.89649359561616, 2 686 808.770418677}
+c#:       {{5,1,3000,10},       87.02312848494996, 1 948 099.75426409}
 
 ### Observations
-* The io in c# is slower that python, but only 30% which seems acceptable
+* The io with stdin/stdout is quite slow in c#, c++ is the quickest
 * The json parsing is a much bigger overhead than the pipe, almost 2 orders of magnitude

@@ -23,7 +23,8 @@
          handle_info/2,
          code_change/3,
          terminate/2,
-         benchmark/4]).
+         benchmark/4,
+         benchmark_fb/1]).
 
 %% Server state
 -record(state, {port}).
@@ -54,6 +55,21 @@ benchmark(PayloadLength, Samples, Parallel) ->
     lists:seq(1, Samples), 1000000),
     {{Samples, PayloadLength, Parallel}, Samples/Elapsed, size(Payload) * Samples / Elapsed}.
 
+benchmark_fb(Samples) ->
+    {ok, Json} = file:read_file("mock.json"),
+    JsonPayload = << Json/binary, <<"\n">>/binary >>,
+
+    % {Elapsed, _} =
+    % fixed_rate:run_parallel(Parallel,
+    %     fun(_) ->
+    %         {response, Data} = echo: parse_fb(Json)
+    %         ok
+    %     end,
+    % lists:seq(1, Samples), 1000000),
+    % {{Samples, PayloadLength, Parallel}, Samples/Elapsed, size(Payload) * Samples / Elapsed}.
+    parse_fb(Json).
+
+
 start_pool(Size) ->
     application:load(echo),
     application:stop(palma),
@@ -75,7 +91,7 @@ echo(Msg, Server) ->
 
 init(ExtProg) ->
     process_flag(trap_exit, true),
-    Port = open_port({spawn, ExtProg}, [binary, stream, {parallelism, true}, {line, 100000}]),
+    Port = open_port({spawn, ExtProg}, [binary, stream, {parallelism, true}, {line, 1000000}, eof]),
     {ok, #state{port = Port}}.
 
 handle_call({echo, Msg}, _From, #state{port = Port} = State) ->
@@ -128,6 +144,14 @@ collect_response(Port) ->
             {response, Data}
     %% Prevent the gen_server from hanging indefinitely in case the
     %% spawned process is taking too long processing the request.
-    after get_timeout() ->
+    after 3000 ->
             timeout
     end.
+
+parse_fb(Json) ->
+    Port = open_port({spawn, "./run.sh"}, [binary, stream, {parallelism, true}]),
+    port_command(Port, Json),
+    port_close(Port),
+    collect_response(Port).
+
+
