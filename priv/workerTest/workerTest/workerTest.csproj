@@ -8,6 +8,8 @@
     <RootNamespace>workerTest</RootNamespace>
     <AssemblyName>workerTest</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,6 +36,12 @@
     <Reference Include="NetJSON">
       <HintPath>..\packages\NetJSON.1.0.9\lib\net40\NetJSON.dll</HintPath>
     </Reference>
+    <Reference Include="lz4.AnyCPU.loader">
+      <HintPath>packages\IonKiwi.lz4.net.1.0.5\lib\net45\lz4.AnyCPU.loader.dll</HintPath>
+    </Reference>
+    <Reference Include="Lz4Net">
+      <HintPath>packages\Lz4.Net.1.0.98\lib\net45\Lz4Net.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -42,5 +50,9 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="lz4.x64.dll" />
+    <None Include="lz4.x86.dll" />
+    <None Include="x64\lz4X64.dll" />
+    <None Include="x86\lz4X86.dll" />
   </ItemGroup>
 </Project>

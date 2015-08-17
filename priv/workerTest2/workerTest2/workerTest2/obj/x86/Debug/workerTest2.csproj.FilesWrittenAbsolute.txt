@@ -1,0 +1,5 @@
+/home/reimerei/dev/port_experiments/priv/workerTest2/workerTest2/workerTest2/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/reimerei/dev/port_experiments/priv/workerTest2/workerTest2/workerTest2/bin/Debug/workerTest2.exe.mdb
+/home/reimerei/dev/port_experiments/priv/workerTest2/workerTest2/workerTest2/bin/Debug/workerTest2.exe
+/home/reimerei/dev/port_experiments/priv/workerTest2/workerTest2/workerTest2/obj/x86/Debug/workerTest2.exe
+/home/reimerei/dev/port_experiments/priv/workerTest2/workerTest2/workerTest2/obj/x86/Debug/workerTest2.exe.mdb

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{AF417B45-E4CB-4776-8F68-79FD294CCB66}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>workerTest2</RootNamespace>
+    <AssemblyName>workerTest2</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+    <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+    <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Components\AcademyComponent.cs" />
+    <Compile Include="Components\ArsenalComponent.cs" />
+    <Compile Include="Components\AssignedWorkersComponent.cs" />
+    <Compile Include="Components\BuildingComponent.cs" />
+    <Compile Include="Components\BuildingStorageComponent.cs" />
+    <Compile Include="Components\CrafterComponent.cs" />
+    <Compile Include="Components\CraftingComponent.cs" />
+    <Compile Include="Components\CraftingQueueComponent.cs" />
+    <Compile Include="Components\DefenceComponent.cs" />
+    <Compile Include="Components\DefenceUpgradingComponent.cs" />
+    <Compile Include="Components\DocksComponent.cs" />
+    <Compile Include="Components\FortressComponent.cs" />
+    <Compile Include="Components\HousingComponent.cs" />
+    <Compile Include="Components\IslandComponent.cs" />
+    <Compile Include="Components\IslandDefenceComponent.cs" />
+    <Compile Include="Components\IslandIDComponent.cs" />
+    <Compile Include="Components\IslandNextPirateAttackComponent.cs" />
+    <Compile Include="Components\IslandOwnerComponent.cs" />
+    <Compile Include="Components\IslandSectorComponent.cs" />
+    <Compile Include="Components\IslandSectorsComponent.cs" />
+    <Compile Include="Components\LastPvpAttackTimeComponent.cs" />
+    <Compile Include="Components\LeftOverResourcesComponent.cs" />
+    <Compile Include="Components\LevelComponent.cs" />
+    <Compile Include="Components\MerchantShipComponent.cs" />
+    <Compile Include="Components\OrderComponent.cs" />
+    <Compile Include="Components\PlayerResourcesComponent.cs" />
+    <Compile Include="Components\PositionComponent.cs" />
+    <Compile Include="Components\ProductionComponent.cs" />
+    <Compile Include="Components\ProductionPausedComponent.cs" />
+    <Compile Include="Components\QuestComponent.cs" />
+    <Compile Include="Components\QuestDoneComponent.cs" />
+    <Compile Include="Components\QuestTaskAmountComponent.cs" />
+    <Compile Include="Components\QuestTaskComponent.cs" />
+    <Compile Include="Components\QuestsCompletedComponent.cs" />
+    <Compile Include="Components\RefineryComponent.cs" />
+    <Compile Include="Components\RefineryPropertiesComponent.cs" />
+    <Compile Include="Components\RepairingComponent.cs" />
+    <Compile Include="Components\ResearchComponent.cs" />
+    <Compile Include="Components\ShipArmyCargoComponent.cs" />
+    <Compile Include="Components\ShipCargoComponent.cs" />
+    <Compile Include="Components\ShipComponent.cs" />
+    <Compile Include="Components\ShipStatusComponent.cs" />
+    <Compile Include="Components\ShipTradeComponent.cs" />
+    <Compile Include="Components\ShipyardComponent.cs" />
+    <Compile Include="Components\SizeComponent.cs" />
+    <Compile Include="Components\StartEndTimeComponent.cs" />
+    <Compile Include="Components\StorageComponent.cs" />
+    <Compile Include="Components\TechnologiesComponent.cs" />
+    <Compile Include="Components\TownhallComponent.cs" />
+    <Compile Include="Components\TrophiesComponent.cs" />
+    <Compile Include="Components\TutorialComponent.cs" />
+    <Compile Include="Components\TypeComponent.cs" />
+    <Compile Include="Components\UnitLevelsComponent.cs" />
+    <Compile Include="Components\UpgradingComponent.cs" />
+    <Compile Include="Components\VaultComponent.cs" />
+    <Compile Include="Components\WorkersProductionComponent.cs" />
+    <Compile Include="Entitas\Entity.cs" />
+    <Compile Include="Entitas\Group.cs" />
+    <Compile Include="Entitas\GroupObserver.cs" />
+    <Compile Include="Entitas\Pool.cs" />
+    <Compile Include="Entitas\ReactiveSystem.cs" />
+    <Compile Include="Entitas\Systems.cs" />
+    <Compile Include="Entitas\Extensions\CollectionExtension.cs" />
+    <Compile Include="Entitas\Extensions\GroupExtension.cs" />
+    <Compile Include="Entitas\Extensions\PoolExtension.cs" />
+    <Compile Include="Entitas\Interfaces\IComponent.cs" />
+    <Compile Include="Entitas\Interfaces\IExecuteSystem.cs" />
+    <Compile Include="Entitas\Interfaces\IMatcher.cs" />
+    <Compile Include="Entitas\Interfaces\IMultiReactiveSystem.cs" />
+    <Compile Include="Entitas\Interfaces\IReactiveExecuteSystem.cs" />
+    <Compile Include="Entitas\Interfaces\IReactiveSystem.cs" />
+    <Compile Include="Entitas\Interfaces\IStartSystem.cs" />
+    <Compile Include="Entitas\Interfaces\ISystem.cs" />
+    <Compile Include="Entitas\Matcher\AbstractCompoundMatcher.cs" />
+    <Compile Include="Entitas\Matcher\AbstractMatcher.cs" />
+    <Compile Include="Entitas\Matcher\AllOfCompoundMatcher.cs" />
+    <Compile Include="Entitas\Matcher\AllOfMatcher.cs" />
+    <Compile Include="Entitas\Matcher\AnyOfCompoundMatcher.cs" />
+    <Compile Include="Entitas\Matcher\AnyOfMatcher.cs" />
+    <Compile Include="Entitas\Matcher\NoneOfCompoundMatcher.cs" />
+    <Compile Include="Entitas\Matcher\NoneOfMatcher.cs" />
+    <Compile Include="Entitas.CodeGenerator\CodeGenFile.cs" />
+    <Compile Include="Entitas.CodeGenerator\CodeGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\ICodeGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\IComponentCodeGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\IPoolCodeGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\ISystemCodeGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Attributes\DontGenerateAttribute.cs" />
+    <Compile Include="Entitas.CodeGenerator\Attributes\PoolAttribute.cs" />
+    <Compile Include="Entitas.CodeGenerator\Attributes\SingleEntityAttribute.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\ComponentExtensionsGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\IndicesLookupGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\PoolAttributeGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\PoolsGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\SystemExtensionsGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\TypeGenerator.cs" />
+    <Compile Include="FlatBuffers\ByteBuffer.cs" />
+    <Compile Include="FlatBuffers\FlatBufferBuilder.cs" />
+    <Compile Include="FlatBuffers\FlatBufferConstants.cs" />
+    <Compile Include="FlatBuffers\Offset.cs" />
+    <Compile Include="FlatBuffers\Struct.cs" />
+    <Compile Include="FlatBuffers\Table.cs" />
+    <Compile Include="FlatBuffersModel\Building.cs" />
+    <Compile Include="FlatBuffersModel\CityDefences.cs" />
+    <Compile Include="FlatBuffersModel\CurrentQuest.cs" />
+    <Compile Include="FlatBuffersModel\Defence.cs" />
+    <Compile Include="FlatBuffersModel\GameData.cs" />
+    <Compile Include="FlatBuffersModel\GameStateRoot.cs" />
+    <Compile Include="FlatBuffersModel\Island.cs" />
+    <Compile Include="FlatBuffersModel\Position.cs" />
+    <Compile Include="FlatBuffersModel\Ship.cs" />
+    <Compile Include="FlatBuffersModel\TimeInterval.cs" />
+    <Compile Include="FlatBuffersModel\TypeAmount.cs" />
+    <Compile Include="FlatBuffersModel\TypeLevel.cs" />
+    <Compile Include="FlatBuffersModel\Workers.cs" />
+    <Compile Include="Generated\AcademyComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\ArsenalComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\AssignedWorkersComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\BuildingComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\BuildingStorageComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\CoreGameAttribute.cs" />
+    <Compile Include="Generated\CoreGameComponentIds.cs" />
+    <Compile Include="Generated\CrafterComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\CraftingComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\CraftingQueueComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\DefenceComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\DefenceUpgradingComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\DocksComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\FortressComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\HousingComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\IslandComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\IslandDefenceComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\IslandIDComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\IslandLastPirateAttackComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\IslandOwnerComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\IslandSectorsComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\LastPvpAttackTimeComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\LeftOverResourcesComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\LevelComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\MerchantShipComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\MetaGameAttribute.cs" />
+    <Compile Include="Generated\MetaGameComponentIds.cs" />
+    <Compile Include="Generated\OrderComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\PlayerResourcesComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\PositionComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\ProductionComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\ProductionPausedComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\QuestComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\QuestDoneComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\QuestsCompletedComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\QuestTaskAmountComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\QuestTaskComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\RefineryComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\RefineryPropertiesComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\RepairingComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\ResearchComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\ShipArmyCargoComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\ShipCargoComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\ShipComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\ShipStatusComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\ShipTradeComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\ShipyardComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\SizeComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\StartEndTimeComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\StorageComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\TechnologiesComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\TownhallComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\TrophiesComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\TutorialComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\TypeComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\UnitLevelsComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\UpgradingComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\VaultComponentGeneratedExtension.cs" />
+    <Compile Include="Generated\WorkersProductionComponentGeneratedExtension.cs" />
+    <Compile Include="Services\AbstractTimeTracker.cs" />
+    <Compile Include="Services\LocalTimeTracker.cs" />
+    <Compile Include="Services\TimeService.cs" />
+    <Compile Include="Utils\ArrayUtils.cs" />
+    <Compile Include="Utils\Deque.cs" />
+    <Compile Include="Utils\DictUtils.cs" />
+    <Compile Include="Utils\IntVector2.cs" />
+    <Compile Include="Utils\ListUtils.cs" />
+    <Compile Include="Utils\SetUtils.cs" />
+    <Compile Include="Utils\StringUtils.cs" />
+    <Compile Include="Utils\TimeUtils.cs" />
+    <Compile Include="Utils\Tuple.cs" />
+    <Compile Include="FBDeserializationService.cs" />
+    <Compile Include="FBSerialisationService.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Components\" />
+    <Folder Include="Entitas\" />
+    <Folder Include="Entitas.CodeGenerator\" />
+    <Folder Include="PlayerStateConverter\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entitas\entitas_version" />
+  </ItemGroup>
+</Project>

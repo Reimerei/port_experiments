@@ -17,14 +17,7 @@
 -export([start_pool/1, echo/1, echo/2, benchmark/3]).
 
 %% gen_server callbacks
--export([init/1,
-         handle_call/3,
-         handle_cast/2,
-         handle_info/2,
-         code_change/3,
-         terminate/2,
-         benchmark/4,
-         benchmark_fb/1]).
+-compile([export_all]).
 
 %% Server state
 -record(state, {port}).
@@ -39,12 +32,12 @@ benchmark(PoolSize, PayloadLength, Samples, Parallel) ->
   {{PoolSize, PayloadLength, Samples, Parallel}, Ops, DataRate}.
 
 benchmark(PayloadLength, Samples, Parallel) ->
-    Payload1 = << <<"x">> || _ <- lists:seq(1, PayloadLength - 1) >>,
-    Payload2 = << Payload1/binary, <<"\n">>/binary >>,
-    {ok, Json} = file:read_file("mock.json"),
-    JsonPayload = << Json/binary, <<"\n">>/binary >>,
+    % Payload1 = << <<"x">> || _ <- lists:seq(1, PayloadLength - 1) >>,
+    % Payload2 = << Payload1/binary, <<"\n">>/binary >>,
+    % {ok, Json} = file:read_file("quests.json"),
+    {ok, Binary} = file:read_file("player_state.mon"),
 
-    Payload = JsonPayload,
+    Payload = Binary,
 
     {Elapsed, _} =
     fixed_rate:run_parallel(Parallel,
@@ -53,21 +46,33 @@ benchmark(PayloadLength, Samples, Parallel) ->
             ok
         end,
     lists:seq(1, Samples), 1000000),
-    {{Samples, PayloadLength, Parallel}, Samples/Elapsed, size(Payload) * Samples / Elapsed}.
+    {{Samples, PayloadLength, Parallel}, Samples/Elapsed, byte_size(Payload) * Samples / Elapsed}.
 
-benchmark_fb(Samples) ->
-    {ok, Json} = file:read_file("mock.json"),
-    JsonPayload = << Json/binary, <<"\n">>/binary >>,
+benchmark_nif(Samples, Parallel) ->
+    {ok, Json} = file:read_file("quests.json"),
+    {ok, Schema} = file:read_file("quests.fbs"),
 
-    % {Elapsed, _} =
-    % fixed_rate:run_parallel(Parallel,
-    %     fun(_) ->
-    %         {response, Data} = echo: parse_fb(Json)
-    %         ok
-    %     end,
-    % lists:seq(1, Samples), 1000000),
-    % {{Samples, PayloadLength, Parallel}, Samples/Elapsed, size(Payload) * Samples / Elapsed}.
-    parse_fb(Json).
+    {Elapsed, _} =
+    fixed_rate:run_parallel(Parallel,
+        fun(_) ->
+            fb_nif:json_to_fb(Json, Schema),
+            ok
+        end,
+    lists:seq(1, Samples), 1000000),
+    {{Samples, Parallel}, Samples/Elapsed, size(Json) * Samples / Elapsed}.
+
+benchmark_json(Samples, Parallel) ->
+    {ok, Json} = file:read_file("quests.json"),
+    {ok, Schema} = file:read_file("quests.fbs"),
+
+    {Elapsed, _} =
+    fixed_rate:run_parallel(Parallel,
+        fun(_) ->
+            jiffy:decode(Json, [return_maps]),
+            ok
+        end,
+    lists:seq(1, Samples), 1000000),
+    {{Samples, Parallel}, Samples/Elapsed, size(Json) * Samples / Elapsed}.
 
 
 start_pool(Size) ->
@@ -80,10 +85,13 @@ start_link(ExtProg) ->
     gen_server:start_link(echo, ExtProg, []).
 
 echo(Msg) ->
+    % echo(<< 0:8, Msg/binary >>, palma:pid(echo_pool)).
     echo(Msg, palma:pid(echo_pool)).
 
 echo(Msg, Server) ->
     gen_server:call(Server, {echo, Msg}, get_timeout()).
+
+
 
 %%%----------------------------------------------------------------------
 %%% Callback functions from gen_server
@@ -91,7 +99,7 @@ echo(Msg, Server) ->
 
 init(ExtProg) ->
     process_flag(trap_exit, true),
-    Port = open_port({spawn, ExtProg}, [binary, stream, {parallelism, true}, {line, 1000000}, eof]),
+    Port = open_port({spawn, ExtProg}, [binary, {packet, 4}, {parallelism, true}]),
     {ok, #state{port = Port}}.
 
 handle_call({echo, Msg}, _From, #state{port = Port} = State) ->
@@ -112,9 +120,9 @@ handle_info({'EXIT', Port, Reason}, #state{port = Port} = State) ->
     {stop, {port_terminated, Reason}, State};
 
 handle_info({Port, {data, Data}}, State) ->
-    io:fwrite("EXTRA:"),    
+    io:fwrite("EXTRA:"),
     % io:fwrite(Data),
-    {noreply, State}.    
+    {noreply, State}.
 
 code_change(_OldVsn, State, _Extra) ->
     {ok, State}.
@@ -139,19 +147,12 @@ get_maxline() ->
 collect_response(Port) ->
     receive
         {Port, {data, Data}} ->
-            % io:fwrite("RECEIVED:"),
+            % io:format("size: ~p\n", [byte_size(Data)]),
             % io:fwrite(Data),
+            % file:write_file("quests.bin.lz4", Data),
             {response, Data}
     %% Prevent the gen_server from hanging indefinitely in case the
     %% spawned process is taking too long processing the request.
     after 3000 ->
             timeout
     end.
-
-parse_fb(Json) ->
-    Port = open_port({spawn, "./run.sh"}, [binary, stream, {parallelism, true}]),
-    port_command(Port, Json),
-    port_close(Port),
-    collect_response(Port).
-
-

@@ -100,13 +100,34 @@ Run on local machine (thinkpad t450s, core i7, 4 cores)
 
 
 ### echo scripts, mock json string (22K)
-c++:      {{5,1,3000,10},   18 898.233015213078, 423 055 844.27856}
-python:   {{5,1,3000,10},   11 909.72428988269,  266 611 087.9533139}
-c#:       {{5,1,3000,10},    5 696.253004773461, 127 516 319.76485868}
+c++, pakets:      {{5,1,3000,10},   49 299.130691995466, 1 103 610 339.6710105}
+c# binary_reader: {{5,1,100000,10}, 38 755.438841398405,   867 540 498.4647032}
+c++:              {{5,1,3000,10},   18 898.233015213078,   423 055 844.27856}
+python:           {{5,1,3000,10},   11 909.72428988269,    266 611 087.9533139}
+c#:               {{5,1,3000,10},    5 696.253004773461,   127 516 319.76485868}
 
 ### echo with serialisation and deseialisation of mock json (13K)
 c#:       {{5,1,3000,10},       87.02312848494996, 1 948 099.75426409}
 
+### echo lz4 zipped data
+
+
 ### Observations
 * The io with stdin/stdout is quite slow in c#, c++ is the quickestZ
 * The json parsing is a much bigger overhead than the pipe, almost 2 orders of magnitude
+
+## Flatbuffers
+
+### call c++ parser from erlang as port (1 CPU)
+22K:  330 ops/sec
+44K:  161 ops/sec
+88K:  81  ops/sec
+350K: 20  ops/sec
+
+22k
+1/50000
+0.02ms
+
+440k
+0.4ms
+0.02ms
